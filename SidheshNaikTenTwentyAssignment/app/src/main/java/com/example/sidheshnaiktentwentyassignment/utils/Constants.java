@@ -1,0 +1,8 @@
+package com.example.sidheshnaiktentwentyassignment.utils;
+
+public class Constants {
+    public static final String API_KEY = "481960e1abf0070f4b2436e2a635d15b";
+    public static final String BASE_URL = "https://api.themoviedb.org/3/";
+    public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
+    public static final String DATABASE_NAME = "MovieDetailsDB";
+}
