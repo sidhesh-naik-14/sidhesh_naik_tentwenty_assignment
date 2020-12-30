@@ -1,6 +1,7 @@
 package com.example.sidheshnaiktentwentyassignment.ui.movielist;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.databinding.ActivityMovieListBinding;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.ui.base.BaseActivity;
+import com.example.sidheshnaiktentwentyassignment.ui.moviedetails.MovieDetailsActivity;
 import com.example.sidheshnaiktentwentyassignment.utils.Constants;
 import com.example.sidheshnaiktentwentyassignment.viewmodel.MovieViewModel;
 
@@ -41,6 +43,7 @@ public class MovieListActivity extends BaseActivity {
         queryMap.put("page", "1");
         setUpRecyclerView();
         checkForRunTimePermissions();
+        observeData();
     }
 
 
@@ -62,7 +65,11 @@ public class MovieListActivity extends BaseActivity {
 
     private void setUpRecyclerView() {
         binding.movieListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MoviesListAdapter(this, moviesList);
+        adapter = new MoviesListAdapter(this, moviesList, movieId -> {
+            Intent intent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
+            intent.putExtra(Constants.MOVIE_ID_KEY,movieId);
+            startActivity(intent);
+        });
         binding.movieListRecyclerView.setAdapter(adapter);
     }
 
@@ -91,8 +98,6 @@ public class MovieListActivity extends BaseActivity {
             }
 
         });
-
-        observeData();
     }
 
     @Override

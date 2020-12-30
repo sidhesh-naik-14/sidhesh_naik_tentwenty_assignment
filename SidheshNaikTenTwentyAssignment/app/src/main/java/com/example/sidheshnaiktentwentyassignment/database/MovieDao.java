@@ -14,12 +14,12 @@ public interface MovieDao {
     @Insert
     void insert(MovieDetails movieDetails);
 
-    @Query("DELETE From movie_details_table WHERE movieId = :movieId")
+    @Query("DELETE From movie_details_table WHERE id = :movieId")
     void delete(int movieId);
 
     @Query("SELECT * FROM movie_details_table")
     LiveData<List<Movie>> getMovieList();
 
-    @Query("SELECT * FROM movie_details_table WHERE movieId = :movieId ")
+    @Query("SELECT * FROM movie_details_table WHERE id = :movieId ")
     MovieDetails getMovie(int movieId);
 }

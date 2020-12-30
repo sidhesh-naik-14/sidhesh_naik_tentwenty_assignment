@@ -1,14 +1,11 @@
 package com.example.sidheshnaiktentwentyassignment.repository;
 
-import android.util.Log;
-
 import com.example.sidheshnaiktentwentyassignment.database.MovieDao;
 import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.model.MovieResponse;
 import com.example.sidheshnaiktentwentyassignment.network.MovieApiService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +36,6 @@ public class Repository {
     }
 
     public void insertMovie(MovieDetails movieDetails){
-        Log.e(TAG, "insertMovie: " );
         movieDao.insert(movieDetails);
     }
 
