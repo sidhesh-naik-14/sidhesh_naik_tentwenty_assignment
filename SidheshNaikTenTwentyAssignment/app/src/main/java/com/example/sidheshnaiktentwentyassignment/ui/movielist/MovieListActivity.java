@@ -30,7 +30,6 @@ public class MovieListActivity extends BaseActivity {
     private ActivityMovieListBinding binding;
     private MovieViewModel viewModel;
     private MoviesListAdapter adapter;
-    private ArrayList<Movie> moviesList = new ArrayList<>();
     private HashMap<String, String> queryMap = new HashMap<>();
 
     @Override
@@ -65,7 +64,7 @@ public class MovieListActivity extends BaseActivity {
 
     private void setUpRecyclerView() {
         binding.movieListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MoviesListAdapter(this, moviesList, movieId -> {
+        adapter = new MoviesListAdapter(this, new ArrayList<>(), movieId -> {
             Intent intent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
             intent.putExtra(Constants.MOVIE_ID_KEY,movieId);
             startActivity(intent);
@@ -76,9 +75,17 @@ public class MovieListActivity extends BaseActivity {
     private void observeData() {
         viewModel.getUpcomingMoviesList().observe(this, movies -> {
             insertMovieDataIntoDatabase(movies);
-            adapter.setList(movies);
+            adapter.setList(convertToMovieDetailsArrayList(movies));
             binding.progressBar.setVisibility(View.GONE);
         });
+    }
+
+    private ArrayList<MovieDetails> convertToMovieDetailsArrayList(ArrayList<Movie> movies) {
+        ArrayList<MovieDetails> movieDetailsArrayList = new ArrayList<>();
+        for (int i=0;i < movies.size(); i++) {
+            movieDetailsArrayList.add(new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult()));
+        }
+        return movieDetailsArrayList;
     }
 
     private void insertMovieDataIntoDatabase(ArrayList<Movie> movies) {
@@ -94,7 +101,7 @@ public class MovieListActivity extends BaseActivity {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 viewModel.getUpcomingMovies(queryMap);
             } else {
-                adapter.setList((ArrayList<Movie>) movieDetails);
+                adapter.setList((ArrayList<MovieDetails>) movieDetails);
             }
 
         });

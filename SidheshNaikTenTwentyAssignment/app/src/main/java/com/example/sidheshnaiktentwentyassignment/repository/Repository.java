@@ -43,7 +43,7 @@ public class Repository {
         return movieDao.getMovie(movieId);
     }
 
-    public LiveData<List<Movie>> getSavedMovieList(){
+    public LiveData<List<MovieDetails>> getSavedMovieList(){
         return  movieDao.getMovieList();
     }
 

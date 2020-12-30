@@ -83,7 +83,7 @@ public class MovieViewModel extends ViewModel {
         return  repository.getMovieDetails(movieId);
     }
 
-    public LiveData<List<Movie>> getSavedMoviesList() {
+    public LiveData<List<MovieDetails>> getSavedMoviesList() {
         return repository.getSavedMovieList();
     }
 

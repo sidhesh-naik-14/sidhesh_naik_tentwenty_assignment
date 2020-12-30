@@ -10,7 +10,6 @@ public class MovieDetails {
 
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "id")
     private Integer id;
     private String title;
     private String poster_path;

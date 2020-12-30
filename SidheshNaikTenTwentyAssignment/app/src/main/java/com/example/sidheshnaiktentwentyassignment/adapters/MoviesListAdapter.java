@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.sidheshnaiktentwentyassignment.R;
+import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.databinding.MovieRowItemBinding;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.utils.Common;
@@ -18,11 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MoviesListViewHolder> {
-    private ArrayList<Movie> moviesList;
+    private ArrayList<MovieDetails> moviesList;
     private Context mContext;
     private MovieListRowClickListener movieListRowClickListener;
 
-    public MoviesListAdapter(Context mContext, ArrayList<Movie> moviesList, MovieListRowClickListener movieListRowClickListener) {
+    public MoviesListAdapter(Context mContext, ArrayList<MovieDetails> moviesList, MovieListRowClickListener movieListRowClickListener) {
         this.mContext = mContext;
         this.moviesList = moviesList;
         this.movieListRowClickListener = movieListRowClickListener;
@@ -67,7 +68,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         }
     }
 
-    public void setList(ArrayList<Movie> list) {
+    public void setList(ArrayList<MovieDetails> list) {
         moviesList = list;
         notifyDataSetChanged();
     }
