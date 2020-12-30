@@ -17,7 +17,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MovieViewModel extends ViewModel {
@@ -54,18 +53,13 @@ public class MovieViewModel extends ViewModel {
 
         disposables.add(repository.getMovieDetails(movieId, map)
                 .subscribeOn(Schedulers.io())
-                .map(new Function<Movie, Movie>() {
-                    @Override
-                    public Movie apply(Movie movie) throws Throwable {
-                        ArrayList<String> genreNames = new ArrayList<>();
-                        // MovieResponse gives list of genre(object) so we will map each id to it genre name here.a
-
-//                        for(Genre genre : movie.getGenres()){
-//                            genreNames.add(genre.getName());
-//                        }
-//                        movie.setGenre_names(genreNames);
-                        return movie;
+                .map(movie -> {
+                    ArrayList<String> genreNames = new ArrayList<>();
+                    for(Genre genre : movie.getGenres()){
+                        genreNames.add(genre.getName());
                     }
+                    movie.setGenre_names(genreNames);
+                    return movie;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> movieDetails.setValue(result),
@@ -81,6 +75,10 @@ public class MovieViewModel extends ViewModel {
 
     public MovieDetails getSavedMovieDetails(int movieId){
         return  repository.getMovieDetails(movieId);
+    }
+
+    public void updateMovieDetails(int movieId, String genres, String videoId, String overView){
+        repository.updateMovieDetails(movieId, genres, videoId,overView);
     }
 
     public LiveData<List<MovieDetails>> getSavedMoviesList() {

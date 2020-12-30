@@ -43,6 +43,10 @@ public class Repository {
         return movieDao.getMovie(movieId);
     }
 
+    public void updateMovieDetails(int movieId, String genres, String videoId, String overView){
+        movieDao.updateMovieDetails(movieId, genres, videoId,overView);
+    }
+
     public LiveData<List<MovieDetails>> getSavedMovieList(){
         return  movieDao.getMovieList();
     }

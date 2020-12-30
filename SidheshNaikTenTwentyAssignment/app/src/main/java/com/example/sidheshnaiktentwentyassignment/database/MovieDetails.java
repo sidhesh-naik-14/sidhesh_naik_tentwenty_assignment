@@ -1,7 +1,6 @@
 package com.example.sidheshnaiktentwentyassignment.database;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,13 +14,19 @@ public class MovieDetails {
     private String poster_path;
     private String release_date;
     private boolean adult;
+    private String genres;
+    private String videoId;
+    private String overView;
 
-    public MovieDetails(@NonNull Integer id, String title, String poster_path, String release_date, boolean adult) {
+    public MovieDetails(@NonNull Integer id, String title, String poster_path, String release_date, boolean adult, String genres, String videoId, String overView) {
         this.id = id;
         this.title = title;
         this.poster_path = poster_path;
         this.release_date = release_date;
         this.adult = adult;
+        this.genres = genres;
+        this.videoId = videoId;
+        this.overView = overView;
     }
 
     @NonNull
@@ -63,5 +68,29 @@ public class MovieDetails {
 
     public void setAdult(boolean adult) {
         this.adult = adult;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
+    }
+
+    public String getOverView() {
+        return overView;
+    }
+
+    public void setOverView(String overView) {
+        this.overView = overView;
     }
 }

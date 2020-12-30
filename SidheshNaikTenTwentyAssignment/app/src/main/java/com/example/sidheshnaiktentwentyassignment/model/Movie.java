@@ -14,8 +14,9 @@ public class Movie {
     private ArrayList<String> genre_names;
     private ArrayList<Genre> genres;
     private JsonObject videos ;
+    private String overview ;
 
-    public Movie(Integer id, String title, String poster_path, String release_date, boolean adult, ArrayList<Integer> genre_ids, ArrayList<String> genre_names, ArrayList<Genre> genres, JsonObject videos) {
+    public Movie(Integer id, String title, String poster_path, String release_date, boolean adult, ArrayList<Integer> genre_ids, ArrayList<String> genre_names, ArrayList<Genre> genres, JsonObject videos, String overview) {
         this.id = id;
         this.title = title;
         this.poster_path = poster_path;
@@ -25,6 +26,7 @@ public class Movie {
         this.genre_names = genre_names;
         this.genres = genres;
         this.videos = videos;
+        this.overview = overview;
     }
 
     public Integer getId() {
@@ -97,5 +99,13 @@ public class Movie {
 
     public void setVideos(JsonObject videos) {
         this.videos = videos;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 }

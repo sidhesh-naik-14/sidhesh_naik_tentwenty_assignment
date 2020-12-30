@@ -1,7 +1,5 @@
 package com.example.sidheshnaiktentwentyassignment.database;
 
-import com.example.sidheshnaiktentwentyassignment.model.Movie;
-
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -22,4 +20,7 @@ public interface MovieDao {
 
     @Query("SELECT * FROM movie_details_table WHERE id = :movieId ")
     MovieDetails getMovie(int movieId);
+
+    @Query("UPDATE movie_details_table SET genres = :genres ,videoId= :videoId,overView= :overView WHERE id LIKE :movieId ")
+    void updateMovieDetails(int movieId,String genres, String videoId, String overView);
 }
