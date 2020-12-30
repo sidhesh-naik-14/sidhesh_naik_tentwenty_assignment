@@ -4,18 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "movie_list_table")
-public class MovieList {
+@Entity(tableName = "movie_details_table")
+public class MovieDetails {
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    private Integer id;
+    private Integer rowId;
+    private Integer movieId;
     private String title;
     private String poster_path;
     private String release_date;
     private boolean adult;
 
-    public MovieList(@NonNull Integer id, String title, String poster_path, String release_date, boolean adult) {
-        this.id = id;
+    public MovieDetails(Integer movieId, String title, String poster_path, String release_date, boolean adult) {
+        this.movieId = movieId;
         this.title = title;
         this.poster_path = poster_path;
         this.release_date = release_date;
@@ -23,12 +24,20 @@ public class MovieList {
     }
 
     @NonNull
-    public Integer getId() {
-        return id;
+    public Integer getRowId() {
+        return rowId;
     }
 
-    public void setId(@NonNull Integer id) {
-        this.id = id;
+    public void setRowId(@NonNull Integer rowId) {
+        this.rowId = rowId;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     public String getTitle() {
