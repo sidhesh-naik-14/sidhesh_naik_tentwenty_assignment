@@ -8,4 +8,8 @@
     <string name="overview_text">Overview</string>
     <string name="watch_trailer_button_text">Watch Trailer</string>
     <string name="done_text">Done</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="choose_cinema">Choose Cinema</string>
+    <string name="choose_seat">Choose Seat</string>
+    <string name="selected_seats">Selected Seats: </string>
 </resources>
