@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.sidheshnaiktentwentyassignment.R;
 import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.databinding.ActivityMovieDetailsBinding;
 import com.example.sidheshnaiktentwentyassignment.ui.base.BaseActivity;

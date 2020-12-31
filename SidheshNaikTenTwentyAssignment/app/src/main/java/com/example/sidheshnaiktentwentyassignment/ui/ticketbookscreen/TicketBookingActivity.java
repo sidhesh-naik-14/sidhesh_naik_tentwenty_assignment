@@ -1,15 +1,10 @@
 package com.example.sidheshnaiktentwentyassignment.ui.ticketbookscreen;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.sidheshnaiktentwentyassignment.databinding.ActivityTicketBookingBinding;
 import com.example.sidheshnaiktentwentyassignment.ui.base.BaseActivity;
-import com.skydoves.powerspinner.OnSpinnerItemSelectedListener;
-
-import org.jetbrains.annotations.Nullable;
 
 public class TicketBookingActivity extends BaseActivity {
     private ActivityTicketBookingBinding binding;
@@ -38,17 +33,10 @@ public class TicketBookingActivity extends BaseActivity {
     }
 
     private void setUpSpinner() {
-        binding.locationSpinner.setOnSpinnerItemSelectedListener((i, o, position, t1) -> {
-            System.out.println("Item = " + t1.toString());
-            selectedLocation = t1.toString();
-        });
+        binding.locationSpinner.setOnSpinnerItemSelectedListener((i, o, position, t1) -> selectedLocation = t1.toString());
 
-        binding.cinemaSpinner.setOnSpinnerItemSelectedListener((i, o, position, t1) -> {
-            System.out.println("Item = " + t1.toString());
-            selectedCinema = t1.toString();
-        });
+        binding.cinemaSpinner.setOnSpinnerItemSelectedListener((i, o, position, t1) -> selectedCinema = t1.toString());
         binding.seatSpinner.setOnSpinnerItemSelectedListener((i, o, position, t1) -> {
-            System.out.println("Item = " + t1.toString());
             if (selectedSeats.isEmpty()) {
                 selectedSeats += t1.toString();
             } else {
