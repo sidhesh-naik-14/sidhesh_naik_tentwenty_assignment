@@ -51,6 +51,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         holder.itemView.setOnClickListener(view -> {
             movieListRowClickListener.didClickMovieListRow(moviesList.get(position).getId());
         });
+        holder.binding.bookButton.setOnClickListener(view -> {
+            movieListRowClickListener.didClickBookButton(moviesList.get(position).getId());
+        });
     }
 
     @Override
@@ -75,5 +78,6 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
     public interface MovieListRowClickListener {
         void didClickMovieListRow(int movieId);
+        void didClickBookButton(int movieId);
     }
 }

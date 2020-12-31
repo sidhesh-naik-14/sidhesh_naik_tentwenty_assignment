@@ -14,6 +14,7 @@ import com.example.sidheshnaiktentwentyassignment.databinding.ActivityMovieListB
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.ui.base.BaseActivity;
 import com.example.sidheshnaiktentwentyassignment.ui.moviedetails.MovieDetailsActivity;
+import com.example.sidheshnaiktentwentyassignment.ui.ticketbookscreen.TicketBookingActivity;
 import com.example.sidheshnaiktentwentyassignment.utils.Constants;
 import com.example.sidheshnaiktentwentyassignment.viewmodel.MovieViewModel;
 
@@ -26,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MovieListActivity extends BaseActivity {
+public class MovieListActivity extends BaseActivity implements MoviesListAdapter.MovieListRowClickListener {
     private ActivityMovieListBinding binding;
     private MovieViewModel viewModel;
     private MoviesListAdapter adapter;
@@ -64,11 +65,7 @@ public class MovieListActivity extends BaseActivity {
 
     private void setUpRecyclerView() {
         binding.movieListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MoviesListAdapter(this, new ArrayList<>(), movieId -> {
-            Intent intent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
-            intent.putExtra(Constants.MOVIE_ID_KEY,movieId);
-            startActivity(intent);
-        });
+        adapter = new MoviesListAdapter(this, new ArrayList<>(),  this);
         binding.movieListRecyclerView.setAdapter(adapter);
     }
 
@@ -124,5 +121,19 @@ public class MovieListActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    @Override
+    public void didClickMovieListRow(int movieId) {
+        Intent intent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
+        intent.putExtra(Constants.MOVIE_ID_KEY,movieId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void didClickBookButton(int movieId) {
+        Intent intent = new Intent(MovieListActivity.this, TicketBookingActivity.class);
+        intent.putExtra(Constants.MOVIE_ID_KEY,movieId);
+        startActivity(intent);
     }
 }

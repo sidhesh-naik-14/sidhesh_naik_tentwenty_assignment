@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_states">
+
+        <item>Goa</item>
+
+        <item>Maharashtra</item>
+
+        <item>Delhi</item>
+
+        <item>Gujrat</item>
+
+        <item>Kerala</item>
+
+        <item>Karnataka</item>
+
+        <item>Punjab</item>
+
+        <item>Rajastan</item>
+
+        <item>West Bengal</item>
+    </string-array>
+
+    <string-array name="array_cinema">
+
+        <item>INOX Cinemas</item>
+
+        <item>PVR</item>
+
+        <item>Z Square Cine</item>
+
+        <item>Carnival Cinema</item>
+
+        <item>Hira Talkies</item>
+
+        <item>INOX Cinemas Osia G Wing</item>
+
+        <item>Cine World</item>
+
+        <item>Z Square Cine Paradise</item>
+
+    </string-array>
+
+    <string-array name="array_booking_seat">
+
+        <item>A1</item>
+        <item>A2</item>
+        <item>A3</item>
+        <item>A4</item>
+        <item>A5</item>
+        <item>A6</item>
+
+        <item>B1</item>
+        <item>B2</item>
+        <item>B3</item>
+        <item>B4</item>
+        <item>B5</item>
+        <item>B6</item>
+
+        <item>C1</item>
+        <item>C2</item>
+        <item>C3</item>
+        <item>C4</item>
+        <item>C5</item>
+        <item>C6</item>
+
+        <item>D1</item>
+        <item>D2</item>
+        <item>D3</item>
+        <item>D4</item>
+        <item>D5</item>
+        <item>D6</item>
+
+        <item>E1</item>
+        <item>E2</item>
+        <item>E3</item>
+        <item>E4</item>
+        <item>E5</item>
+        <item>E6</item>
+
+        <item>F1</item>
+        <item>F2</item>
+        <item>F3</item>
+        <item>F4</item>
+        <item>F5</item>
+        <item>F6</item>
+
+        <item>G1</item>
+        <item>G2</item>
+        <item>G3</item>
+        <item>G4</item>
+        <item>G5</item>
+        <item>G6</item>
+
+        <item>H1</item>
+        <item>H2</item>
+        <item>H3</item>
+        <item>H4</item>
+        <item>H5</item>
+        <item>H6</item>
+
+        <item>I1</item>
+        <item>I2</item>
+        <item>I3</item>
+        <item>I4</item>
+        <item>I5</item>
+        <item>I6</item>
+
+        <item>J1</item>
+        <item>J2</item>
+        <item>J3</item>
+        <item>J4</item>
+        <item>J5</item>
+        <item>J6</item>
+
+        <item>K1</item>
+        <item>K2</item>
+        <item>K3</item>
+        <item>K4</item>
+        <item>K5</item>
+        <item>K6</item>
+
+    </string-array>
+</resources>
