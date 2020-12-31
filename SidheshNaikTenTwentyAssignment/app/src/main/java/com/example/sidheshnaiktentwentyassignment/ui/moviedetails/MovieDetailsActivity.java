@@ -71,13 +71,17 @@ public class MovieDetailsActivity extends BaseActivity {
         });
 
         binding.doneButton.setOnClickListener(view -> {
-            binding.youtubePlayer.exitFullScreen();
-            binding.youtubePlayerView.setVisibility(View.GONE);
+            stopPlayer();
         });
     }
 
     private void getIntentData() {
        movieId = getIntent().getIntExtra(Constants.MOVIE_ID_KEY,0);
+    }
+
+    private void stopPlayer(){
+        binding.youtubePlayer.release();
+        binding.youtubePlayerView.setVisibility(View.GONE);
     }
 
     private void getMovieDetails() {
@@ -118,4 +122,14 @@ public class MovieDetailsActivity extends BaseActivity {
         super.onDestroy();
         binding = null;
     }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.youtubePlayerView.getVisibility() == View.VISIBLE) {
+            stopPlayer();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
+

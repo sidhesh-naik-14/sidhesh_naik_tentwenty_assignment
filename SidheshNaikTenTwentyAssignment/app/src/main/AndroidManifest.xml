@@ -17,9 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.moviedetails.MovieDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
+            android:configChanges="orientation|screenSize|locale"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.movielist.MovieListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
