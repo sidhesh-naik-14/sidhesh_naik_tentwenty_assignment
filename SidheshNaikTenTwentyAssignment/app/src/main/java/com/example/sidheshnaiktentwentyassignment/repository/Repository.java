@@ -1,14 +1,11 @@
 package com.example.sidheshnaiktentwentyassignment.repository;
 
-import android.util.Log;
-
 import com.example.sidheshnaiktentwentyassignment.database.MovieDao;
 import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.model.MovieResponse;
 import com.example.sidheshnaiktentwentyassignment.network.MovieApiService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +36,6 @@ public class Repository {
     }
 
     public void insertMovie(MovieDetails movieDetails){
-        Log.e(TAG, "insertMovie: " );
         movieDao.insert(movieDetails);
     }
 
@@ -47,7 +43,11 @@ public class Repository {
         return movieDao.getMovie(movieId);
     }
 
-    public LiveData<List<Movie>> getSavedMovieList(){
+    public void updateMovieDetails(int movieId, String genres, String videoId, String overView){
+        movieDao.updateMovieDetails(movieId, genres, videoId,overView);
+    }
+
+    public LiveData<List<MovieDetails>> getSavedMovieList(){
         return  movieDao.getMovieList();
     }
 

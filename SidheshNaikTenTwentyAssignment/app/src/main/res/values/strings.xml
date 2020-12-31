@@ -3,4 +3,9 @@
     <string name="book_button_text">BOOK</string>
     <string name="adult_text">Adult</string>
     <string name="non_adult_text">Non Adult</string>
+    <string name="genres_text">Genres</string>
+    <string name="date_text">Date</string>
+    <string name="overview_text">Overview</string>
+    <string name="watch_trailer_button_text">Watch Trailer</string>
+    <string name="done_text">Done</string>
 </resources>

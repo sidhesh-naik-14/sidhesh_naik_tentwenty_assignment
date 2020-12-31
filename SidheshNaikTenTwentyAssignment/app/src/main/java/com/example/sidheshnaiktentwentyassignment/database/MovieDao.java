@@ -1,7 +1,5 @@
 package com.example.sidheshnaiktentwentyassignment.database;
 
-import com.example.sidheshnaiktentwentyassignment.model.Movie;
-
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -14,12 +12,15 @@ public interface MovieDao {
     @Insert
     void insert(MovieDetails movieDetails);
 
-    @Query("DELETE From movie_details_table WHERE movieId = :movieId")
+    @Query("DELETE From movie_details_table WHERE id = :movieId")
     void delete(int movieId);
 
     @Query("SELECT * FROM movie_details_table")
-    LiveData<List<Movie>> getMovieList();
+    LiveData<List<MovieDetails>> getMovieList();
 
-    @Query("SELECT * FROM movie_details_table WHERE movieId = :movieId ")
+    @Query("SELECT * FROM movie_details_table WHERE id = :movieId ")
     MovieDetails getMovie(int movieId);
+
+    @Query("UPDATE movie_details_table SET genres = :genres ,videoId= :videoId,overView= :overView WHERE id LIKE :movieId ")
+    void updateMovieDetails(int movieId,String genres, String videoId, String overView);
 }

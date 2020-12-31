@@ -1,6 +1,7 @@
 package com.example.sidheshnaiktentwentyassignment.ui.movielist;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.databinding.ActivityMovieListBinding;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.ui.base.BaseActivity;
+import com.example.sidheshnaiktentwentyassignment.ui.moviedetails.MovieDetailsActivity;
 import com.example.sidheshnaiktentwentyassignment.utils.Constants;
 import com.example.sidheshnaiktentwentyassignment.viewmodel.MovieViewModel;
 
@@ -28,7 +30,6 @@ public class MovieListActivity extends BaseActivity {
     private ActivityMovieListBinding binding;
     private MovieViewModel viewModel;
     private MoviesListAdapter adapter;
-    private ArrayList<Movie> moviesList = new ArrayList<>();
     private HashMap<String, String> queryMap = new HashMap<>();
 
     @Override
@@ -41,6 +42,7 @@ public class MovieListActivity extends BaseActivity {
         queryMap.put("page", "1");
         setUpRecyclerView();
         checkForRunTimePermissions();
+        observeData();
     }
 
 
@@ -62,21 +64,33 @@ public class MovieListActivity extends BaseActivity {
 
     private void setUpRecyclerView() {
         binding.movieListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MoviesListAdapter(this, moviesList);
+        adapter = new MoviesListAdapter(this, new ArrayList<>(), movieId -> {
+            Intent intent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
+            intent.putExtra(Constants.MOVIE_ID_KEY,movieId);
+            startActivity(intent);
+        });
         binding.movieListRecyclerView.setAdapter(adapter);
     }
 
     private void observeData() {
         viewModel.getUpcomingMoviesList().observe(this, movies -> {
             insertMovieDataIntoDatabase(movies);
-            adapter.setList(movies);
+            adapter.setList(convertToMovieDetailsArrayList(movies));
             binding.progressBar.setVisibility(View.GONE);
         });
     }
 
+    private ArrayList<MovieDetails> convertToMovieDetailsArrayList(ArrayList<Movie> movies) {
+        ArrayList<MovieDetails> movieDetailsArrayList = new ArrayList<>();
+        for (int i=0;i < movies.size(); i++) {
+            movieDetailsArrayList.add(new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult(),null,null,null));
+        }
+        return movieDetailsArrayList;
+    }
+
     private void insertMovieDataIntoDatabase(ArrayList<Movie> movies) {
         for (int i = 0; i < movies.size(); i++) {
-            MovieDetails movieDetails = new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult());
+            MovieDetails movieDetails = new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult(),null,null,null);
             viewModel.insertMovie(movieDetails);
         }
     }
@@ -87,12 +101,10 @@ public class MovieListActivity extends BaseActivity {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 viewModel.getUpcomingMovies(queryMap);
             } else {
-                adapter.setList((ArrayList<Movie>) movieDetails);
+                adapter.setList((ArrayList<MovieDetails>) movieDetails);
             }
 
         });
-
-        observeData();
     }
 
     @Override

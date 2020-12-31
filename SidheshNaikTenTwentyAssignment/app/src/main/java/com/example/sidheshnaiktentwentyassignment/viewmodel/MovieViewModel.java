@@ -3,6 +3,7 @@ package com.example.sidheshnaiktentwentyassignment.viewmodel;
 import android.util.Log;
 
 import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
+import com.example.sidheshnaiktentwentyassignment.model.Genre;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.repository.Repository;
 
@@ -49,8 +50,17 @@ public class MovieViewModel extends ViewModel {
     }
 
     public void getMovieDetails(int movieId, HashMap<String, String> map) {
+
         disposables.add(repository.getMovieDetails(movieId, map)
                 .subscribeOn(Schedulers.io())
+                .map(movie -> {
+                    ArrayList<String> genreNames = new ArrayList<>();
+                    for(Genre genre : movie.getGenres()){
+                        genreNames.add(genre.getName());
+                    }
+                    movie.setGenre_names(genreNames);
+                    return movie;
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> movieDetails.setValue(result),
                         error -> Log.e(TAG, "getMovieDetails: " + error.getMessage()))
@@ -63,11 +73,15 @@ public class MovieViewModel extends ViewModel {
         repository.insertMovie(movieDetails);
     }
 
-    public MovieDetails getMovieDetails(int movieId){
+    public MovieDetails getSavedMovieDetails(int movieId){
         return  repository.getMovieDetails(movieId);
     }
 
-    public LiveData<List<Movie>> getSavedMoviesList() {
+    public void updateMovieDetails(int movieId, String genres, String videoId, String overView){
+        repository.updateMovieDetails(movieId, genres, videoId,overView);
+    }
+
+    public LiveData<List<MovieDetails>> getSavedMoviesList() {
         return repository.getSavedMovieList();
     }
 

@@ -2,10 +2,12 @@ package com.example.sidheshnaiktentwentyassignment.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.sidheshnaiktentwentyassignment.R;
+import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.databinding.MovieRowItemBinding;
 import com.example.sidheshnaiktentwentyassignment.model.Movie;
 import com.example.sidheshnaiktentwentyassignment.utils.Common;
@@ -17,12 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MoviesListViewHolder> {
-    private ArrayList<Movie> moviesList;
+    private ArrayList<MovieDetails> moviesList;
     private Context mContext;
+    private MovieListRowClickListener movieListRowClickListener;
 
-    public MoviesListAdapter(Context mContext, ArrayList<Movie> moviesList) {
+    public MoviesListAdapter(Context mContext, ArrayList<MovieDetails> moviesList, MovieListRowClickListener movieListRowClickListener) {
         this.mContext = mContext;
         this.moviesList = moviesList;
+        this.movieListRowClickListener = movieListRowClickListener;
     }
 
     @NonNull
@@ -38,12 +42,15 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         holder.binding.movieTitleTextView.setText(moviesList.get(position).getTitle());
         if (moviesList.get(position).isAdult()) {
             holder.binding.movieGradeTextView.setText(mContext.getString(R.string.adult_text));
-        }else {
+        } else {
             holder.binding.movieGradeTextView.setText(mContext.getString(R.string.non_adult_text));
         }
-        holder.binding.movieReleaseDateTextView.setText(Common.getExpectedDateFormat("YYYY-MM-DD","dd MMM yyyy",moviesList.get(position).getRelease_date()));
+        holder.binding.movieReleaseDateTextView.setText(Common.getExpectedDateFormat("YYYY-MM-DD", "dd MMM yyyy", moviesList.get(position).getRelease_date()));
         Glide.with(mContext).load(Constants.IMAGE_BASE_URL + moviesList.get(position).getPoster_path())
                 .into(holder.binding.posterImageView);
+        holder.itemView.setOnClickListener(view -> {
+            movieListRowClickListener.didClickMovieListRow(moviesList.get(position).getId());
+        });
     }
 
     @Override
@@ -61,8 +68,12 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         }
     }
 
-    public void setList(ArrayList<Movie> list) {
+    public void setList(ArrayList<MovieDetails> list) {
         moviesList = list;
         notifyDataSetChanged();
+    }
+
+    public interface MovieListRowClickListener {
+        void didClickMovieListRow(int movieId);
     }
 }
