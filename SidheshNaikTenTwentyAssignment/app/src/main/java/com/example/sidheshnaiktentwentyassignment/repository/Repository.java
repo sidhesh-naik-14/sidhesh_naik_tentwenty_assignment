@@ -43,8 +43,12 @@ public class Repository {
         return movieDao.getMovie(movieId);
     }
 
-    public void updateMovieDetails(int movieId, String genres, String videoId, String overView){
-        movieDao.updateMovieDetails(movieId, genres, videoId,overView);
+    public boolean isMovieDetailsUpdated(int movieId){
+        return movieDao.isMovieDetailsUpdated(movieId);
+    }
+
+    public void updateMovieDetails(int movieId, String genres, String videoId, String overView,boolean movieDetailsUpdated){
+        movieDao.updateMovieDetails(movieId, genres, videoId,overView,movieDetailsUpdated);
     }
 
     public LiveData<List<MovieDetails>> getSavedMovieList(){

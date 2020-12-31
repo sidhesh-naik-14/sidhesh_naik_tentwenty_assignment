@@ -17,8 +17,9 @@ public class MovieDetails {
     private String genres;
     private String videoId;
     private String overView;
+    private boolean movieDetailsUpdated;
 
-    public MovieDetails(@NonNull Integer id, String title, String poster_path, String release_date, boolean adult, String genres, String videoId, String overView) {
+    public MovieDetails(@NonNull Integer id, String title, String poster_path, String release_date, boolean adult, String genres, String videoId, String overView, boolean movieDetailsUpdated) {
         this.id = id;
         this.title = title;
         this.poster_path = poster_path;
@@ -27,6 +28,7 @@ public class MovieDetails {
         this.genres = genres;
         this.videoId = videoId;
         this.overView = overView;
+        this.movieDetailsUpdated = movieDetailsUpdated;
     }
 
     @NonNull
@@ -92,5 +94,13 @@ public class MovieDetails {
 
     public void setOverView(String overView) {
         this.overView = overView;
+    }
+
+    public boolean isMovieDetailsUpdated() {
+        return movieDetailsUpdated;
+    }
+
+    public void setMovieDetailsUpdated(boolean movieDetailsUpdated) {
+        this.movieDetailsUpdated = movieDetailsUpdated;
     }
 }

@@ -80,14 +80,14 @@ public class MovieListActivity extends BaseActivity implements MoviesListAdapter
     private ArrayList<MovieDetails> convertToMovieDetailsArrayList(ArrayList<Movie> movies) {
         ArrayList<MovieDetails> movieDetailsArrayList = new ArrayList<>();
         for (int i=0;i < movies.size(); i++) {
-            movieDetailsArrayList.add(new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult(),null,null,null));
+            movieDetailsArrayList.add(new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult(),null,null,null,false));
         }
         return movieDetailsArrayList;
     }
 
     private void insertMovieDataIntoDatabase(ArrayList<Movie> movies) {
         for (int i = 0; i < movies.size(); i++) {
-            MovieDetails movieDetails = new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult(),null,null,null);
+            MovieDetails movieDetails = new MovieDetails(movies.get(i).getId(),movies.get(i).getTitle(),movies.get(i).getPoster_path(),movies.get(i).getRelease_date(),movies.get(i).isAdult(),null,null,null,false);
             viewModel.insertMovie(movieDetails);
         }
     }

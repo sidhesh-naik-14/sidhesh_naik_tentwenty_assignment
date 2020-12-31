@@ -21,6 +21,9 @@ public interface MovieDao {
     @Query("SELECT * FROM movie_details_table WHERE id = :movieId ")
     MovieDetails getMovie(int movieId);
 
-    @Query("UPDATE movie_details_table SET genres = :genres ,videoId= :videoId,overView= :overView WHERE id LIKE :movieId ")
-    void updateMovieDetails(int movieId,String genres, String videoId, String overView);
+    @Query("SELECT movieDetailsUpdated FROM movie_details_table WHERE id = :movieId ")
+    boolean isMovieDetailsUpdated(int movieId);
+
+    @Query("UPDATE movie_details_table SET genres = :genres ,videoId= :videoId,overView= :overView,movieDetailsUpdated= :movieDetailsUpdated WHERE id LIKE :movieId ")
+    void updateMovieDetails(int movieId,String genres, String videoId, String overView, boolean movieDetailsUpdated);
 }

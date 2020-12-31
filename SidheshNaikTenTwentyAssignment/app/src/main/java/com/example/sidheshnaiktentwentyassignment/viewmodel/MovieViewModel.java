@@ -77,8 +77,12 @@ public class MovieViewModel extends ViewModel {
         return  repository.getMovieDetails(movieId);
     }
 
-    public void updateMovieDetails(int movieId, String genres, String videoId, String overView){
-        repository.updateMovieDetails(movieId, genres, videoId,overView);
+    public void updateMovieDetails(int movieId, String genres, String videoId, String overView,boolean movieDetailsUpdated){
+        repository.updateMovieDetails(movieId, genres, videoId,overView,movieDetailsUpdated);
+    }
+
+    public boolean isMovieDetailsUpdated(int movieId){
+        return repository.isMovieDetailsUpdated(movieId);
     }
 
     public LiveData<List<MovieDetails>> getSavedMoviesList() {

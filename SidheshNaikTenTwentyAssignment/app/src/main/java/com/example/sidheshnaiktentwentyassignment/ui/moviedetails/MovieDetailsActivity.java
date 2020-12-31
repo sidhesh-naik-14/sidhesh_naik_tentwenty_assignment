@@ -89,7 +89,7 @@ public class MovieDetailsActivity extends BaseActivity {
 
     private void getMovieDetails() {
         binding.progressBar.setVisibility(View.VISIBLE);
-        if (isMovieDetailsStoredInDatabase()) {
+        if (viewModel.isMovieDetailsUpdated(movieId)) {
             populateMovieDetails(viewModel.getSavedMovieDetails(movieId));
         } else {
             viewModel.getMovieDetails(movieId,queryMap);
@@ -120,23 +120,22 @@ public class MovieDetailsActivity extends BaseActivity {
             }
             JsonArray array = movie.getVideos().getAsJsonArray("results");
             videoId = array.get(0).getAsJsonObject().get("key").getAsString();
-            viewModel.updateMovieDetails(movieId, genresText.toString(),videoId,movie.getOverview());
-            setFlagMovieDetailsStoredInDatabase();
-            populateMovieDetails(new MovieDetails(movie.getId(),movie.getTitle(),movie.getPoster_path(),movie.getRelease_date(),movie.isAdult(),genresText.toString(),videoId,movie.getOverview()));
+            viewModel.updateMovieDetails(movieId, genresText.toString(),videoId,movie.getOverview(),true);
+            populateMovieDetails(new MovieDetails(movie.getId(),movie.getTitle(),movie.getPoster_path(),movie.getRelease_date(),movie.isAdult(),genresText.toString(),videoId,movie.getOverview(),true));
         });
     }
 
-    private void setFlagMovieDetailsStoredInDatabase() {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(Constants.MOVIE_DETAILS_STORED_IN_DB_KEY, true);
-        editor.apply();
-    }
-
-    private boolean isMovieDetailsStoredInDatabase() {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getBoolean(Constants.MOVIE_DETAILS_STORED_IN_DB_KEY, false);
-    }
+//    private void setFlagMovieDetailsStoredInDatabase() {
+//        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putBoolean(Constants.MOVIE_DETAILS_STORED_IN_DB_KEY, true);
+//        editor.apply();
+//    }
+//
+//    private boolean isMovieDetailsStoredInDatabase() {
+//        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+//        return sharedPref.getBoolean(Constants.MOVIE_DETAILS_STORED_IN_DB_KEY, false);
+//    }
 
     @Override
     protected void onDestroy() {
