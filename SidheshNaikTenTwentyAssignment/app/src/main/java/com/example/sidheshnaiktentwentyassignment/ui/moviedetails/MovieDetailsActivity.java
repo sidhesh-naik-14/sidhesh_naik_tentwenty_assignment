@@ -1,11 +1,15 @@
 package com.example.sidheshnaiktentwentyassignment.ui.moviedetails;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.sidheshnaiktentwentyassignment.R;
+import com.example.sidheshnaiktentwentyassignment.database.MovieDetails;
 import com.example.sidheshnaiktentwentyassignment.databinding.ActivityMovieDetailsBinding;
 import com.example.sidheshnaiktentwentyassignment.ui.base.BaseActivity;
 import com.example.sidheshnaiktentwentyassignment.utils.Common;
@@ -86,20 +90,28 @@ public class MovieDetailsActivity extends BaseActivity {
 
     private void getMovieDetails() {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.getMovieDetails(movieId,queryMap);
+        if (isMovieDetailsStoredInDatabase()) {
+            populateMovieDetails(viewModel.getSavedMovieDetails(movieId));
+        } else {
+            viewModel.getMovieDetails(movieId,queryMap);
+        }
+    }
+
+    private void populateMovieDetails(MovieDetails movieDetails){
+        Glide.with(this).load(Constants.IMAGE_BASE_URL + movieDetails.getPoster_path())
+                .centerCrop()
+                .into(binding.posterImageView);
+        binding.movieTitleTextView.setText(movieDetails.getTitle());
+        binding.genresTextView.setText(movieDetails.getGenres());
+        binding.overviewTextView.setText(movieDetails.getOverView());
+        binding.movieReleaseDateTextView.setText(Common.getExpectedDateFormat("YYYY-MM-DD", "dd MMM yyyy", movieDetails.getRelease_date()));
+        videoId = movieDetails.getVideoId();
+        binding.progressBar.setVisibility(View.GONE);
     }
 
     private void observeData() {
 
         viewModel.getMovie().observe(this, movie -> {
-            binding.progressBar.setVisibility(View.GONE);
-            Glide.with(this).load(Constants.IMAGE_BASE_URL + movie.getPoster_path())
-                    .centerCrop()
-                    .into(binding.posterImageView);
-
-            binding.movieTitleTextView.setText(movie.getTitle());
-
-
             StringBuilder genresText = new StringBuilder();
             for (int i = 0; i < movie.getGenres().size(); i++){
                 if(i ==  movie.getGenres().size() -1)
@@ -107,14 +119,24 @@ public class MovieDetailsActivity extends BaseActivity {
                 else
                     genresText.append(movie.getGenres().get(i).getName()).append(", ");
             }
-
-            binding.genresTextView.setText(genresText.toString());
-            binding.overviewTextView.setText(movie.getOverview());
-            binding.movieReleaseDateTextView.setText(Common.getExpectedDateFormat("YYYY-MM-DD", "dd MMM yyyy", movie.getRelease_date()));
             JsonArray array = movie.getVideos().getAsJsonArray("results");
             videoId = array.get(0).getAsJsonObject().get("key").getAsString();
             viewModel.updateMovieDetails(movieId, genresText.toString(),videoId,movie.getOverview());
+            setFlagMovieDetailsStoredInDatabase();
+            populateMovieDetails(new MovieDetails(movie.getId(),movie.getTitle(),movie.getPoster_path(),movie.getRelease_date(),movie.isAdult(),genresText.toString(),videoId,movie.getOverview()));
         });
+    }
+
+    private void setFlagMovieDetailsStoredInDatabase() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(Constants.MOVIE_DETAILS_STORED_IN_DB_KEY, true);
+        editor.apply();
+    }
+
+    private boolean isMovieDetailsStoredInDatabase() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(Constants.MOVIE_DETAILS_STORED_IN_DB_KEY, false);
     }
 
     @Override
