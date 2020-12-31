@@ -6,4 +6,5 @@ public class Constants {
     public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
     public static final String DATABASE_NAME = "MovieDetailsDB";
     public static final String MOVIE_ID_KEY = "MovieId";
+    public static final String VIDEO_ID_KEY = "VideoId";
 }

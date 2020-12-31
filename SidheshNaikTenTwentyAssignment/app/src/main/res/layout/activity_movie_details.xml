@@ -36,6 +36,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/watch_trailer_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/value_10dp"
@@ -95,6 +96,29 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/youtube_player_view">
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtubePlayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/done_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/value_10dp"
+                android:layout_marginEnd="@dimen/value_10dp"
+                android:text="@string/done_text"
+                tools:ignore="RelativeOverlap" />
+        </RelativeLayout>
     </RelativeLayout>
 
 

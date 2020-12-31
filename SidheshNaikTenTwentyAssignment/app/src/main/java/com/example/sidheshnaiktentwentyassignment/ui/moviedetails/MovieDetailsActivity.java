@@ -1,7 +1,9 @@
 package com.example.sidheshnaiktentwentyassignment.ui.moviedetails;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sidheshnaiktentwentyassignment.databinding.ActivityMovieDetailsBinding;
@@ -10,6 +12,9 @@ import com.example.sidheshnaiktentwentyassignment.utils.Common;
 import com.example.sidheshnaiktentwentyassignment.utils.Constants;
 import com.example.sidheshnaiktentwentyassignment.viewmodel.MovieViewModel;
 import com.google.gson.JsonArray;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
 import java.util.HashMap;
 
@@ -33,9 +38,42 @@ public class MovieDetailsActivity extends BaseActivity {
         queryMap.put("api_key", Constants.API_KEY);
         queryMap.put("page", "1");
         queryMap.put("append_to_response","videos");
+        setButtonClickListener();
         getIntentData();
         observeData();
         getMovieDetails();
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    private void setButtonClickListener() {
+        binding.watchTrailerButton.setOnClickListener(view -> {
+            if(videoId != null){
+                binding.youtubePlayerView.setVisibility(View.VISIBLE);
+                getLifecycle().addObserver(binding.youtubePlayer);
+                binding.youtubePlayer.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onError(YouTubePlayer youTubePlayer, PlayerConstants.PlayerError error) {
+                        super.onError(youTubePlayer, error);
+                        Toast.makeText(MovieDetailsActivity.this,"Some error occurred!",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onReady(YouTubePlayer youTubePlayer) {
+                        super.onReady(youTubePlayer);
+                        youTubePlayer.loadVideo(videoId, 0);
+
+                    }
+                });
+                binding.youtubePlayer.enterFullScreen();
+            }
+            else
+                Toast.makeText(this,"Sorry trailer not found!",Toast.LENGTH_SHORT).show();
+        });
+
+        binding.doneButton.setOnClickListener(view -> {
+            binding.youtubePlayer.exitFullScreen();
+            binding.youtubePlayerView.setVisibility(View.GONE);
+        });
     }
 
     private void getIntentData() {
